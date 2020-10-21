@@ -44,7 +44,14 @@ type FakeResponse = {
   }
 }
 
-class FakeSocket implements WebSocket {
+export type EventEmitterClasses = {
+  EventTarget: typeof EventTarget
+  Event: typeof Event
+  MessageEvent: typeof MessageEvent
+  CloseEvent: typeof CloseEvent
+}
+
+class FakeSocketBase implements WebSocket {
   static addAlternative(forUrl: string, url: string): void {
     alternatives[forUrl] = url
   }
@@ -59,9 +66,10 @@ class FakeSocket implements WebSocket {
   _wSocket: WebSocket | undefined
   isFakeSocket = false
   _readyState: number = ReadyStates.CONNECTING
+  _eeClasses: EventEmitterClasses
 
   // EventTarget Stuff
-  _eventTarget = new EventTarget()
+  _eventTarget: EventTarget
   addEventListener(...args: Parameters<WebSocket['addEventListener']>): void {
     this._eventTarget.addEventListener(...args)
   }
@@ -85,7 +93,7 @@ class FakeSocket implements WebSocket {
     if (!this.isFakeSocket) {
       resetErrorCount(this.url)
     }
-    const event = new Event('open')
+    const event = new this._eeClasses.Event('open')
     this.onopen && this.onopen(event)
     this.dispatchEvent(event)
   }
@@ -96,14 +104,14 @@ class FakeSocket implements WebSocket {
     if (!this.isFakeSocket && this._wSocket && this._wSocket.readyState === ReadyStates.CLOSED) {
       increaseErrorCount(this.url)
     }
-    const event = new Event('error')
+    const event = new this._eeClasses.Event('error')
     this.onerror && this.onerror(event)
     this.dispatchEvent(event)
   }
   handleMessage = (init: { data: string }): void => {
     const { data } = init
     log('⏬ Receive', data)
-    const event = new MessageEvent('message', {
+    const event = new this._eeClasses.MessageEvent('message', {
       data,
       origin: this.origin
     })
@@ -117,12 +125,14 @@ class FakeSocket implements WebSocket {
       wasClean: data.wasClean
     })
     const { code, reason, wasClean } = data
-    const event = new CloseEvent('close', { code, reason, wasClean })
+    const event = new this._eeClasses.CloseEvent('close', { code, reason, wasClean })
     this.onclose && this.onclose(event)
     this.dispatchEvent(event)
   }
 
-  constructor(url: string, protocols?: string | string[]) {
+  constructor(eeClasses: EventEmitterClasses, url: string, protocols?: string | string[]) {
+    this._eeClasses = eeClasses
+    this._eventTarget = new this._eeClasses.EventTarget()
     this.url = url
     this.origin = url.split('/').slice(0, 3).join('/')
     if (isWSAvailable(url) || !alternatives[url]) {
@@ -313,4 +323,4 @@ class FakeSocket implements WebSocket {
   }
 }
 
-export default FakeSocket
+export default FakeSocketBase

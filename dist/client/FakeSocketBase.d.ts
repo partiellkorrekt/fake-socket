@@ -13,7 +13,13 @@ declare type FakeResponse = {
         closeReasonName?: string;
     };
 };
-declare class FakeSocket implements WebSocket {
+export declare type EventEmitterClasses = {
+    EventTarget: typeof EventTarget;
+    Event: typeof Event;
+    MessageEvent: typeof MessageEvent;
+    CloseEvent: typeof CloseEvent;
+};
+declare class FakeSocketBase implements WebSocket {
     static addAlternative(forUrl: string, url: string): void;
     static setLoggingEnabled(enabled: boolean): void;
     url: string;
@@ -22,6 +28,7 @@ declare class FakeSocket implements WebSocket {
     _wSocket: WebSocket | undefined;
     isFakeSocket: boolean;
     _readyState: number;
+    _eeClasses: EventEmitterClasses;
     _eventTarget: EventTarget;
     addEventListener(...args: Parameters<WebSocket['addEventListener']>): void;
     dispatchEvent(...args: Parameters<WebSocket['dispatchEvent']>): boolean;
@@ -36,7 +43,7 @@ declare class FakeSocket implements WebSocket {
         data: string;
     }) => void;
     handleClose: (data: CloseEventInit) => void;
-    constructor(url: string, protocols?: string | string[]);
+    constructor(eeClasses: EventEmitterClasses, url: string, protocols?: string | string[]);
     get binaryType(): BinaryType;
     get bufferedAmount(): number;
     get extensions(): string;
@@ -60,4 +67,4 @@ declare class FakeSocket implements WebSocket {
     onInterval: () => void;
     close(code?: number | undefined, reason?: string | undefined): void;
 }
-export default FakeSocket;
+export default FakeSocketBase;

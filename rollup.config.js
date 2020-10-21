@@ -6,7 +6,7 @@ import { terser } from 'rollup-plugin-terser'
 import autoExternal from 'rollup-plugin-auto-external'
 
 export default {
-  input: ['src/server.ts', 'src/client.ts'],
+  input: ['src/server.ts', 'src/client.ts', 'src/client-rn.ts'],
   plugins: [
     multiInput(),
     commonjs(),
@@ -21,5 +21,6 @@ export default {
     dir: 'dist',
     format: 'cjs',
     exports: 'auto'
-  }
+  },
+  external: ['event-target-shim']
 }
