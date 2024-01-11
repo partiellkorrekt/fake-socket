@@ -1,8 +1,8 @@
-declare type EventListener = (evt: Event) => void;
-declare type EventListenerObject = {
+type EventListener = (evt: Event) => void;
+type EventListenerObject = {
     handleEvent(evt: Event): void;
 };
-declare type AddEventListenerOptions = {
+type AddEventListenerOptions = {
     once?: boolean;
     passive?: boolean;
     capture?: boolean;

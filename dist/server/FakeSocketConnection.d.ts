@@ -17,7 +17,7 @@ export declare const knownCloseCodes: {
     1015: string;
 };
 export declare const READYSTATES: string[];
-export declare type WebsocketEvent = {
+export type WebsocketEvent = {
     type: 'message';
     data: WebSocket.Data;
 } | {
@@ -32,8 +32,8 @@ declare class FakeSocketConnection {
     constructor(address: string, protocols?: string[], options?: WebSocket.ClientOptions);
     refresh(): void;
     get age(): number;
-    set onopen(listener: (event: WebSocket.OpenEvent) => void);
-    get onopen(): (event: WebSocket.OpenEvent) => void;
+    set onopen(listener: (event: WebSocket.Event) => void);
+    get onopen(): ((event: WebSocket.Event) => void) | null;
     send(message: string): Promise<void>;
     close(code?: number, message?: string): Promise<void>;
     getBuffer(destructive?: boolean): {

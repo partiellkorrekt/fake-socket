@@ -1,6 +1,6 @@
 import { Express, Request, Application } from 'express-serve-static-core';
 import { json as ExpressJSON } from 'body-parser';
-export declare type FakeSocketExpressSettings = {
+export type FakeSocketExpressSettings = {
     express: (() => Express) & {
         json: typeof ExpressJSON;
     };

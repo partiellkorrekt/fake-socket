@@ -23,7 +23,7 @@ const ReadyStates = {
   OPEN: 1,
   CLOSING: 2,
   CLOSED: 3
-}
+} as const
 
 type FakeSocketEvent =
   | {

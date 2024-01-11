@@ -1,10 +1,10 @@
-declare type FakeSocketEvent = {
+type FakeSocketEvent = {
     type: 'message';
     data: string;
 } | {
     type: 'error';
 };
-declare type FakeResponse = {
+type FakeResponse = {
     socket?: {
         buffer: FakeSocketEvent[];
         readyState: 0 | 1 | 2 | 3;
@@ -13,7 +13,7 @@ declare type FakeResponse = {
         closeReasonName?: string;
     };
 };
-export declare type EventEmitterClasses = {
+export type EventEmitterClasses = {
     EventTarget: typeof EventTarget;
     Event: typeof Event;
     MessageEvent: typeof MessageEvent;
@@ -48,14 +48,14 @@ declare class FakeSocketBase implements WebSocket {
     get bufferedAmount(): number;
     get extensions(): string;
     get protocol(): string;
-    CLOSED: number;
-    CLOSING: number;
-    CONNECTING: number;
-    OPEN: number;
-    static CLOSED: number;
-    static CLOSING: number;
-    static CONNECTING: number;
-    static OPEN: number;
+    CLOSED: 3;
+    CLOSING: 2;
+    CONNECTING: 0;
+    OPEN: 1;
+    static CLOSED: 3;
+    static CLOSING: 2;
+    static CONNECTING: 0;
+    static OPEN: 1;
     get readyState(): number;
     handleFakeResponse: (response: FakeResponse) => void;
     _hasPanicked: boolean;

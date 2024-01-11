@@ -66,10 +66,10 @@ class FakeSocketConnection {
     return new Date().getTime() - this._lastUsed
   }
 
-  set onopen(listener: (event: WebSocket.OpenEvent) => void) {
+  set onopen(listener: (event: WebSocket.Event) => void) {
     this._socket.onopen = listener
   }
-  get onopen(): (event: WebSocket.OpenEvent) => void {
+  get onopen(): ((event: WebSocket.Event) => void) | null {
     return this._socket.onopen
   }
 

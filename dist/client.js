@@ -1,1 +1,1 @@
-"use strict";var e=require("./FakeSocketBase-9e81539d.js"),t={EventTarget:EventTarget,Event:Event,MessageEvent:MessageEvent,CloseEvent:CloseEvent},n=function(n){function s(e,s){return n.call(this,t,e,s)||this}return e.__extends(s,n),s}(e.FakeSocketBase);module.exports=n;
+"use strict";var e=require("./FakeSocketBase-Xy2JIdQM.js"),t={EventTarget:EventTarget,Event:Event,MessageEvent:MessageEvent,CloseEvent:CloseEvent},n=function(n){function s(e,s){return n.call(this,t,e,s)||this}return e.__extends(s,n),s}(e.FakeSocketBase);module.exports=n;

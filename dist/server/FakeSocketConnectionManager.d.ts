@@ -15,14 +15,14 @@ declare class FakeSocketConnectionManager {
         activityTimeout?: number;
     });
     onActivityTimer: () => void;
-    logEvent: (message: string, socket?: FakeSocketConnection | undefined, emoji?: string | undefined) => void;
+    logEvent: (message: string, socket?: FakeSocketConnection, emoji?: string) => void;
     createSocket: (protocols: string[]) => Promise<{
         key: string;
         socket: FakeSocketConnection;
     }>;
-    getSocket: (key?: string | undefined) => Promise<FakeSocketConnection>;
-    sendMessages: (key?: string | undefined, messages?: string[] | undefined) => Promise<FakeSocketConnection>;
-    _close: (socket: FakeSocketConnection, code?: number, message?: string | undefined) => Promise<void>;
-    close: (key?: string, code?: number | undefined, message?: string | undefined) => Promise<FakeSocketConnection>;
+    getSocket: (key?: string) => Promise<FakeSocketConnection>;
+    sendMessages: (key?: string, messages?: string[]) => Promise<FakeSocketConnection>;
+    _close: (socket: FakeSocketConnection, code?: number, message?: string) => Promise<void>;
+    close: (key?: string, code?: number, message?: string) => Promise<FakeSocketConnection>;
 }
 export default FakeSocketConnectionManager;
